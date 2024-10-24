@@ -3,7 +3,7 @@ import '../index.css'
 function Record(){
 
     return(
-        <p>Hellow World</p>
+        <p>Record Activity Page</p>
 
     );
 }

@@ -1,21 +1,27 @@
 import '../index.css'
-import {useState } from 'react'
+import {useState, useEffect } from 'react'
+import axios from 'axios'
 
 
 function Activity_Tracker(){
     const [activeTab, setActiveTab] = useState('activities')
-    
+    const [activitiesData, setActivitiesData] = useState([])
+
     const handleTabChange = (tab)=>{
         setActiveTab(tab);
     }
 
-    const activityData = [
-        { title: "Activity Title", description: "text text text text text text text text text text text text text text text text ", completedOn:"2024-10-15"},
-        { title: "Activity Title", description: "text text text text text text text text text text text text text text text text ", completedOn:"2024-10-15"},
-        { title: "Activity Title", description: "text text text text text text text text text text text text text text text text ", completedOn:"2024-10-15"},
-        { title: "Activity Title", description: "text text text text text text text text text text text text text text text text ", completedOn:"2024-10-15"},
-        { title: "Activity Title", description: "text text text text text text text text text text text text text text text text ", completedOn:"2024-10-15"},
-    ]
+    useEffect(() => {
+        const fetchActivitiesData = async () => {
+            const response = await axios.get('https://my.api.mockaroo.com/activities_tracker?key=594b4990');
+            const fetchedData = response.data || [];
+            console.log(fetchedData)
+
+            setActivitiesData([...fetchedData]);
+        };
+
+        fetchActivitiesData();
+    }, []); 
 
     return(
         <div className='activity-tracker-container'>
@@ -43,11 +49,11 @@ function Activity_Tracker(){
             )}
             {activeTab==='activities' && (
                  <div className='activities-div'>
-                    {activityData.map((activity, index) => (
+                    {activitiesData.map((activity, index) => (
                     <div className="activity-card" key={index}>
-                        <h2>{activity.completedOn}</h2>
-                        <h3>{activity.title}</h3>
-                        <p>{activity.description}</p>
+                        <h2>{activity.date}</h2>
+                        <h3>{activity.activity_name}</h3>
+                        <p>{activity.activity_description}</p>
                     </div>
                 ))}
                 </div>
