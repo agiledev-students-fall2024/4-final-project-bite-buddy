@@ -15,7 +15,6 @@ export const validateUser = [
     .withMessage("Password must be at least 6 characters long"),
 ];
 
-// Not used yet
 // Recipe validation rules
 export const validateRecipe = [
   body("name")
@@ -53,7 +52,7 @@ export const validateUpdateProfile = [
   body("age")
     .optional()
     .isInt({ min: 13 })
-    .withMessage("Age must be a positive integer"),
+    .withMessage("Age must be at integer of at least 13"),
   body("location")
     .optional()
     .isString()
@@ -62,6 +61,30 @@ export const validateUpdateProfile = [
     .optional()
     .isString()
     .withMessage("Bio must be a string"),
+];
+
+// Activity duration check for int until implementation is changed from int to int array
+// Validation rules for activity creation or update
+export const validateActivity = [
+  body("activity_name")
+    .isString()
+    .notEmpty()
+    .withMessage("Activity name is required"),
+  body("activity_description")
+    .optional()
+    .isString()
+    .withMessage("Activity description must be a string"),
+  body("date")
+    .optional()
+    .isISO8601()
+    .withMessage("Date must be a valid ISO 8601 date"),
+  body("activity_duration")
+    .isInt({ min: 0 })
+    .withMessage("Activity duration must be a non-negative integer"),
+    // .isArray()
+    // .withMessage("Activity duration must be an array of numbers")
+    // .custom((arr) => arr.every((num) => typeof num === "number"))
+    // .withMessage("All items in activity duration must be numbers"),
 ];
 
 // Handle validation errors

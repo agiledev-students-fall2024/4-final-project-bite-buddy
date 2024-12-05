@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import "../Home.css";
 
 function ShareRecipe({ closeShare, submitShareRecipe }) {
@@ -67,7 +68,7 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/api/shareRecipe", {
+      const response = await fetch(`${process.env.REACT_APP_BACK_PORT}/api/shareRecipe`, {
         method: "POST",
         body: recipeData,
       });
