@@ -7,29 +7,23 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
     name: "",
     description: "",
     ingredients: [""],
-    steps: [""],
-    duration: 0,
-    prep_time: 0,
-    cook_time: 0,
-    total_time: 0,
+    steps: [{ type: "", duration: 0 }],
     cuisine: "",
     difficulty_level: 1,
     calories_per_serving: 0,
     rating: 0,
+    total_time: 0,
     isChallenge: false,
-    image: null, // Add image field
+    image: null,
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const numericFields = [
-      "duration",
-      "prep_time",
-      "cook_time",
-      "total_time",
       "difficulty_level",
       "calories_per_serving",
       "rating",
+      "total_time",
     ];
     setFormData({
       ...formData,
@@ -42,26 +36,64 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] }); // Add selected file to formData
+    setFormData({ ...formData, image: e.target.files[0] });
   };
 
   const handleArrayChange = (e, index, field) => {
-    const updatedArray = [...formData[field]];
-    updatedArray[index] = e.target.value;
-    setFormData({ ...formData, [field]: updatedArray });
+    const newArray = [...formData[field]];
+    const { name, value } = e.target;
+
+    if (field === "steps") {
+      // Ensure duration can be null but not less than 0
+      const parsedValue =
+        name === "duration"
+          ? value === ""
+            ? null
+            : Math.max(Number(value), 0)
+          : value;
+
+      newArray[index] = {
+        ...newArray[index],
+        [name]: parsedValue,
+      };
+    } else {
+      // For ingredients, handle simple strings
+      newArray[index] = value;
+    }
+
+    setFormData({ ...formData, [field]: newArray });
   };
 
   const addArrayField = (field) => {
-    setFormData({ ...formData, [field]: [...formData[field], ""] });
+    if (field === "steps") {
+      setFormData({
+        ...formData,
+        steps: [...formData.steps, { type: "", duration: 0 }],
+      });
+    } else {
+      setFormData({ ...formData, [field]: [...formData[field], ""] });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const recipeData = new FormData(); // Use FormData to handle file and text data
+    const recipeData = new FormData();
+
     Object.entries(formData).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        value.forEach((item) => recipeData.append(key, item));
+        if (key === "steps") {
+          // Append each step object as a separate field
+          value.forEach((item, index) => {
+            recipeData.append(`${key}[${index}][type]`, item.type);
+            recipeData.append(`${key}[${index}][duration]`, item.duration);
+          });
+        } else {
+          // Append other arrays (e.g., ingredients) as separate fields
+          value.forEach((item) => {
+            recipeData.append(key, item);
+          });
+        }
       } else {
         recipeData.append(key, value);
       }
@@ -134,12 +166,23 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
           {formData.steps.map((step, index) => (
             <div key={index}>
               <textarea
-                value={step}
+                name="type"
+                value={step.type}
                 onChange={(e) => handleArrayChange(e, index, "steps")}
                 required
+                placeholder="Describe the step"
+              />
+              <input
+                name="duration"
+                type="number"
+                value={step.duration !== null ? step.duration : ""}
+                onChange={(e) => handleArrayChange(e, index, "steps")}
+                min="0" // Enforce minimum value of 0
+                placeholder="Duration (minutes, optional)"
               />
             </div>
           ))}
+
           <button
             className="share-button"
             type="button"
@@ -149,27 +192,7 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
           </button>
         </div>
         <div>
-          <label>Prep Time (minutes):</label>
-          <input
-            name="prep_time"
-            type="number"
-            value={formData.prep_time}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Cook Time (minutes):</label>
-          <input
-            name="cook_time"
-            type="number"
-            value={formData.cook_time}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Total Time (minutes):</label>
+          <label>Total Time Approximation (minutes):</label>
           <input
             name="total_time"
             type="number"

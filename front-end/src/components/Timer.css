@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-.timer-container h3{
+.timer-container h3 {
   margin: 0;
 }
 .timer-bar {
@@ -24,9 +24,12 @@
   color: #242424;
 }
 
+.timerScale {
+  transform: scale(0.67);
+}
 .timer-button {
   padding: 10px 20px;
-  background-color: #96CEB4;
+  background-color: #96ceb4;
   color: white;
   border: none;
   border-radius: 5px;
