@@ -3,44 +3,46 @@ import { body, validationResult } from "express-validator";
 // Not used yet
 // User validation rules
 export const validateUser = [
-  body("username")
-    .isString()
-    .notEmpty()
-    .withMessage("Username is required"),
-  body("email")
-    .isEmail()
-    .withMessage("A valid email is required"),
+  body("username").isString().notEmpty().withMessage("Username is required"),
+  body("email").isEmail().withMessage("A valid email is required"),
   body("password")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
 ];
 
 // Recipe validation rules
+
 export const validateRecipe = [
-  body("name")
-    .isString()
-    .notEmpty()
-    .withMessage("Recipe name is required"),
+  body("name").isString().notEmpty().withMessage("Recipe name is required"),
   body("ingredients")
     .isArray({ min: 1 })
     .withMessage("Ingredients must be an array with at least one item"),
   body("steps")
     .isArray({ min: 1 })
-    .withMessage("Steps must be an array with at least one step"),
-  body("cuisine")
-    .isString()
-    .notEmpty()
-    .withMessage("Cuisine is required"),
-  body("rating")
-    .isFloat({ min: 0, max: 5 })
-    .withMessage("Rating must be between 0 and 5"),
+    .withMessage("Steps must be an array with at least one step")
+    .custom((steps) => {
+      if (!Array.isArray(steps)) {
+        throw new Error("Steps must be an array of objects");
+      }
+      steps.forEach((step, index) => {
+        if (typeof step.type !== "string" || step.type.trim() === "") {
+          throw new Error(`Step at index ${index} must have a valid 'type'`);
+        }
+        if (step.duration !== undefined && typeof step.duration !== "number") {
+          throw new Error(
+            `Step at index ${index} must have 'duration' as a number if provided`
+          );
+        }
+      });
+      return true;
+    }),
+
+  body("cuisine").isString().notEmpty().withMessage("Cuisine is required"),
 ];
 
 // Validation rules for updating user profile
 export const validateUpdateProfile = [
-  body("userId")
-    .isMongoId()
-    .withMessage("Valid user ID is required"),
+  body("userId").isMongoId().withMessage("Valid user ID is required"),
   body("firstName")
     .optional()
     .isString()
@@ -57,10 +59,7 @@ export const validateUpdateProfile = [
     .optional()
     .isString()
     .withMessage("Location must be a string"),
-  body("bio")
-    .optional()
-    .isString()
-    .withMessage("Bio must be a string"),
+  body("bio").optional().isString().withMessage("Bio must be a string"),
 ];
 
 // Activity duration check for int until implementation is changed from int to int array

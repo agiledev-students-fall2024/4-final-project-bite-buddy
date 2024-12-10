@@ -17,22 +17,16 @@ const recipeSchema = new mongoose.Schema({
   ],
   steps: [
     {
-      type: String,
-      required: true,
+      type: {
+        type: String,
+        required: true,
+      },
+      duration: {
+        type: Number,
+        required: false,
+      },
     },
   ],
-  duration: {
-    type: Number,
-    required: true,
-  },
-  prep_time: {
-    type: Number,
-    required: true,
-  },
-  cook_time: {
-    type: Number,
-    required: true,
-  },
   total_time: {
     type: Number,
     required: true,

@@ -57,43 +57,41 @@ function Recipes() {
   const handleStartRecipe = async (selectedRecipe) => {
     // Navigate to the record activity page, passing the recipe data
     console.log("going to recipe id:" + selectedRecipe.id);
-    console.log('selectedrecipe is', selectedRecipe)
+    console.log("selectedrecipe is", selectedRecipe);
     try {
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId'); 
-      const userRecipes = (await axios.get(
-        `${process.env.REACT_APP_BACK_PORT}/api/user`,
-        {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      const userRecipes = (
+        await axios.get(`${process.env.REACT_APP_BACK_PORT}/api/user`, {
           params: {
-            userId: userId
-          }
-        }
-      )).data.recipes;
-      console.log("user info", userRecipes)
-      if(!userRecipes.some((recipe) => recipe.id === selectedRecipe.id)) {
+            userId: userId,
+          },
+        })
+      ).data.recipes;
+      console.log("user info", userRecipes);
+      if (!userRecipes.some((recipe) => recipe.id === selectedRecipe.id)) {
         await axios.post(
-            `${process.env.REACT_APP_BACK_PORT}/api/user/add-recipe`,
-            {
-              userId,
-              userRecipe: {
-                _id: new mongoose.Types.ObjectId(),
-                id: selectedRecipe.id
-  
-              }
+          `${process.env.REACT_APP_BACK_PORT}/api/user/add-recipe`,
+          {
+            userId,
+            userRecipe: {
+              _id: new mongoose.Types.ObjectId(),
+              id: selectedRecipe.id,
             },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       }
 
-      console.log('User recipes updated successfully');
+      console.log("User recipes updated successfully");
       navigate("/record", { state: { selectedRecipe } });
     } catch (error) {
-        console.error('Error updating user recipes:', error);
-        console.error(error.response.data)
+      console.error("Error updating user recipes:", error);
+      console.error(error.response.data);
     }
   };
 
@@ -109,9 +107,9 @@ function Recipes() {
                 onClick={() => handleStartClick(recipeItem)}
                 key={index}
               >
-                {/*<div className="recipeImg">
+                <div className="recipeImg">
                   <img src={recipeItem.imgs} alt="oops,img problems!" />
-                </div>*/}
+                </div>
                 <div className="recipeText">
                   <h1>{recipeItem.name}</h1>
                   <p>{recipeItem.description}</p>
@@ -124,16 +122,17 @@ function Recipes() {
                 </button>
               </div>
             ))}
-             {selectedRecipe && (
+            {selectedRecipe && (
               <div className="popup-overlay" onClick={close}>
-                <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+                <div
+                  className="popup-content"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <h1>{selectedRecipe.name}</h1>
-                  <h3 style={{color: '#242424'}}>Ingredients:</h3>
+                  <h3 style={{ color: "#242424" }}>Ingredients:</h3>
                   <ul className="recipes-ingredients-list">
                     {selectedRecipe.ingredients?.map((ingredient, index) => (
-                      <li>
-                        {ingredient}
-                      </li>
+                      <li>{ingredient}</li>
                     ))}
                   </ul>
                   <button
@@ -144,7 +143,10 @@ function Recipes() {
                   </button>
                   {selectedRecipe.steps.map((step, index) => (
                     <div key={index}>
-                      <p>Step {index + 1}: {step}</p>
+                      <p>
+                        Step {index + 1}: {step.type}{" "}
+                        {step.duration ? `(${step.duration} minutes)` : ""}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -156,6 +158,36 @@ function Recipes() {
           </div>
         </div>
       </div>
+      {selectedRecipe && (
+        <div className="popup-overlay" onClick={close}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <h1>{selectedRecipe.name}</h1>
+            <h3 style={{ color: "#242424" }}>Ingredients:</h3>
+            <ul className="recipes-ingredients-list">
+              {selectedRecipe.ingredients?.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            </ul>
+            <button
+              className="start-button"
+              onClick={() => handleStartRecipe(selectedRecipe)}
+            >
+              START RECIPE
+            </button>
+            {selectedRecipe.steps.map((step, index) => (
+              <div key={index}>
+                <p>
+                  Step {index + 1}: {step.type}{" "}
+                  {step.duration ? `(${step.duration} minutes)` : ""}
+                </p>
+              </div>
+            ))}
+          </div>
+          <button className="close-button" onClick={close}>
+            X
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -19,7 +19,6 @@ function Record() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(""); // State for user message
 
-
   const [completedSteps, setCompletedSteps] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -53,28 +52,27 @@ function Record() {
 
   const handleRecipeComplete = async () => {
     setIsModalOpen(true);
-    console.log("completed recipe:", currRecipe)
+    console.log("completed recipe:", currRecipe);
     try {
-        const token = localStorage.getItem('token');
-        const userId = localStorage.getItem('userId');
-        const recipeId = currRecipe.id;
-        await axios.put(
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      const recipeId = currRecipe.id;
+      await axios.put(
         `${process.env.REACT_APP_BACK_PORT}/api/user/complete-recipe`,
         {
           userId,
-          recipeId
+          recipeId,
         },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-        );
-  
-      } catch (error) {
-        console.error('Error completing recipe:', error);
-        console.error(error.response.data)
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error completing recipe:", error);
+      console.error(error.response.data);
+    }
   };
 
   const closeModal = () => {
@@ -89,8 +87,8 @@ function Record() {
 
   const closeModalTop = () => {
     setIsModalOpen(false);
-  }
-
+  };
+  /*
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
 
@@ -133,25 +131,28 @@ function Record() {
       console.error("Error uploading image:", error);
     }
   };
-
+*/
   useEffect(() => {
     const cachedRecipe = JSON.parse(localStorage.getItem("currentRecipe"));
     if (cachedRecipe) {
       setCurrRecipe(cachedRecipe);
       setMessage("You have an ongoing recipe"); // Set the user message
-      console.log('set cached recipe as current', cachedRecipe);
+      console.log("set cached recipe as current", cachedRecipe);
     } else if (location.state?.selectedRecipe) {
       setCurrRecipe(location.state.selectedRecipe);
-      console.log('set recipe from location state', location.state.selectedRecipe);
+      console.log(
+        "set recipe from location state",
+        location.state.selectedRecipe
+      );
     }
   }, [location.state?.selectedRecipe]);
 
   useEffect(() => {
     if (currRecipe) {
       localStorage.setItem("currentRecipe", JSON.stringify(currRecipe));
-      console.log('put into local storage', currRecipe);
+      console.log("put into local storage", currRecipe);
     }
-  }, [currRecipe]); 
+  }, [currRecipe]);
 
   useEffect(() => {
     if (message) {
@@ -198,11 +199,10 @@ function Record() {
 
   return (
     <div className="record-container">
-      {message && <div className="user-message">{message}</div>} {/* Render the message */}
+      {message && <div className="user-message">{message}</div>}{" "}
+      {/* Render the message */}
       <h1> {currRecipe.name || "N/A"}</h1>
       <hr></hr>
-      <Timer duration={currRecipe.duration || 240} />
-      
       <IngredientsList
         ingredients={currRecipe.ingredients}
         selectedIngredients={selectedIngredients}
@@ -216,16 +216,16 @@ function Record() {
         buttonRef={buttonRef}
         onComplete={handleRecipeComplete}
       />
-
-      <button className='quit-activity-button' onClick={closeModal}>Quit Recipe</button>
-      
+      <button className="quit-activity-button" onClick={closeModal}>
+        Quit Recipe
+      </button>
       <CompletionModal
         isOpen={isModalOpen}
         onRequestClose={closeModalTop}
-        onFileChange={handleFileChange}
-        onSubmit={handleSubmit}
+        /*onFileChange={handleFileChange}
+        onSubmit={handleSubmit}*/
         error={error}
-        closeModalNoImage = {closeModal}
+        closeModalNoImage={closeModal}
       />
     </div>
   );
