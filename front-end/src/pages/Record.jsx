@@ -88,7 +88,7 @@ function Record() {
   const closeModalTop = () => {
     setIsModalOpen(false);
   };
-
+  /*
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
 
@@ -131,7 +131,7 @@ function Record() {
       console.error("Error uploading image:", error);
     }
   };
-
+*/
   useEffect(() => {
     const cachedRecipe = JSON.parse(localStorage.getItem("currentRecipe"));
     if (cachedRecipe) {
@@ -222,10 +222,10 @@ function Record() {
       <CompletionModal
         isOpen={isModalOpen}
         onRequestClose={closeModalTop}
-        onFileChange={handleFileChange}
-        onSubmit={handleSubmit}
+        /*onFileChange={handleFileChange}
+        onSubmit={handleSubmit}*/
         error={error}
-        closeModalNoImage = {closeModal}
+        closeModalNoImage={closeModal}
       />
     </div>
   );
