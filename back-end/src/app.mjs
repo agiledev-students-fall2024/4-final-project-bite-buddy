@@ -42,7 +42,7 @@ mongoose.connection.on("error", (err) =>
 // Configure CORS
 app.use(
   cors({
-    origin: `${process.env.frontPORT}`,
+    origin: `https://4-final-project-bite-buddy-digital-ocean.vercel.app/`,
     credentials: true,
   })
 );
@@ -70,7 +70,8 @@ app.use(morgan("dev"));
 //   next();
 // };
 // app.use(corsMiddleware);
-app.use(cors());
+
+// app.use(cors());
 
 // Routes for auth
 app.use("/api/auth", authRoutes);
