@@ -210,7 +210,7 @@ app.get("/api/user", async (req, res) => {
 });*/
 
 // NOT TESTED YET because route is not used yet
-/*app.post(
+app.post(
   "/api/user/add-recipe",
   validateRecipe, // Validate recipe data
   handleValidationErrors, // Handle validation errors
@@ -235,9 +235,9 @@ app.get("/api/user", async (req, res) => {
       res.status(500).json({ message: "Failed to update user recipe list" });
     }
   }
-);*/
+);
 
-app.post("/api/user/add-recipe", async (req, res) => {
+/*app.post("/api/user/add-recipe", async (req, res) => {
   try {
     const { userId, userRecipe } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -255,7 +255,7 @@ app.post("/api/user/add-recipe", async (req, res) => {
     console.error("Error updating profile:", error);
     res.status(500).json({ message: "Failed to update user recipe list" });
   }
-});
+});*/
 
 app.put("/api/user/complete-recipe", async (req, res) => {
   console.log("route hit");

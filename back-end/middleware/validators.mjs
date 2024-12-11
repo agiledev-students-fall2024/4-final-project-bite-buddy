@@ -13,31 +13,9 @@ export const validateUser = [
 // Recipe validation rules
 
 export const validateRecipe = [
-  body("name").isString().notEmpty().withMessage("Recipe name is required"),
-  body("ingredients")
-    .isArray({ min: 1 })
-    .withMessage("Ingredients must be an array with at least one item"),
-  body("steps")
-    .isArray({ min: 1 })
-    .withMessage("Steps must be an array with at least one step")
-    .custom((steps) => {
-      if (!Array.isArray(steps)) {
-        throw new Error("Steps must be an array of objects");
-      }
-      steps.forEach((step, index) => {
-        if (typeof step.type !== "string" || step.type.trim() === "") {
-          throw new Error(`Step at index ${index} must have a valid 'type'`);
-        }
-        if (step.duration !== undefined && typeof step.duration !== "number") {
-          throw new Error(
-            `Step at index ${index} must have 'duration' as a number if provided`
-          );
-        }
-      });
-      return true;
-    }),
-
-  body("cuisine").isString().notEmpty().withMessage("Cuisine is required"),
+  body("userId")
+    .isString()
+    .withMessage("User ID must be a string"),
 ];
 
 // Validation rules for updating user profile
