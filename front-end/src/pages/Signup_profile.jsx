@@ -46,7 +46,6 @@ function Signup_Profile(){
     return (
         <>
             <div className='edit-profile'>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s" alt="profile-pic"></img>
                 <h2>Edit your profile</h2>
                 
                 <form onSubmit={goToHome}>
