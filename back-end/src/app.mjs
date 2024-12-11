@@ -296,25 +296,22 @@ app.put(
   async (req, res) => {
     try {
       const { userId, firstName, lastName, age, location, bio } = req.body;
-
-      // Update the user based on the provided userId
-      console.log("this is userID", userId);
-      const updatedUser = await User.findByIdAndUpdate(
-        userId,
-        {
-          first_name: firstName,
-          last_name: lastName,
-          age,
-          location,
-          bio,
-        },
-        { new: true }
-      );
-
+      const updateFields = {};
+      if (firstName) updateFields.first_name = firstName;
+      if (lastName) updateFields.last_name = lastName;
+      if (age) updateFields.age = age;
+      if (location) updateFields.location = location;
+      if (bio !== undefined && bio !== '') updateFields.bio = bio;
+      if (Object.keys(updateFields).length === 0) {
+        return res.status(400).json({ message: "No fields provided for update" });
+      }
+      const updatedUser = await User.findByIdAndUpdate(userId, updateFields, {
+        new: true, 
+        runValidators: true,
+      });
       if (!updatedUser) {
         return res.status(404).json({ message: "User not found" });
       }
-
       res.status(200).json(updatedUser);
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -322,6 +319,7 @@ app.put(
     }
   }
 );
+
 
 /// Start the server
 export const startServer = () => {
