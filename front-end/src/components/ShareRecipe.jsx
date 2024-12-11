@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "../Home.css";
 
 function ShareRecipe({ closeShare, submitShareRecipe }) {
@@ -25,14 +25,15 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
       "rating",
       "total_time",
     ];
-    setFormData({
-      ...formData,
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: numericFields.includes(name)
-        ? Number(value)
+        ? value // Keep the value as a string for now
         : type === "checkbox"
         ? checked
         : value,
-    });
+    }));
   };
 
   const handleFileChange = (e) => {
@@ -100,14 +101,18 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
     });
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACK_PORT}/api/shareRecipe`, {
-        method: "POST",
-        body: recipeData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_PORT}/api/shareRecipe`,
+        {
+          method: "POST",
+          body: recipeData,
+        }
+      );
 
       const result = await response.json();
       if (response.ok) {
         console.log("Recipe submitted successfully:", result);
+        closeShare();
       } else {
         console.error("Error submitting recipe:", result.message);
       }
