@@ -119,10 +119,6 @@ const Home = () => {
             <strong>Recipes Completed:</strong>{" "}
             {numRecipesCompleted}
           </p>
-          <p>
-            <strong>Time Spent Cooking:</strong>{" "}
-            {weeklyActivitiesStats.activityMins} min
-          </p>
         </div>
         
 
