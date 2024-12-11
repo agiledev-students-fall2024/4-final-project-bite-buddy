@@ -42,7 +42,7 @@ mongoose.connection.on("error", (err) =>
 // Configure CORS
 app.use(
   cors({
-    origin: `https://4-final-project-bite-buddy-digital-ocean.vercel.app/`,
+    origin: `https://4-final-project-bite-buddy-digital-ocean.vercel.app`,
     credentials: true,
   })
 );
