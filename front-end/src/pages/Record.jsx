@@ -221,7 +221,7 @@ function Record() {
       </button>
       <CompletionModal
         isOpen={isModalOpen}
-        onRequestClose={closeModalTop}
+        onRequestClose={closeModal}
         /*onFileChange={handleFileChange}
         onSubmit={handleSubmit}*/
         error={error}
