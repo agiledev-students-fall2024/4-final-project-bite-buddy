@@ -14,7 +14,6 @@ import User from "../models/user.mjs";
 import ActivitySchema from "../models/activity.mjs";
 import Recipe from "../models/recipe.mjs";
 import path from "path";
-import cors from "cors";
 import {
   validateUser,
   validateRecipe, 
