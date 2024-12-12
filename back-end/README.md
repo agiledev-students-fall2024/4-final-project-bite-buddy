@@ -1,4 +1,7 @@
-# Getting Started with Express App
+## Backend Deployment
+Bite Buddy is deployed using CI/CD. The backend is [hosted on DigitalOcean](https://squid-app-t9mda.ondigitalocean.app/). Any changes made to the [forked repository](https://github.com/ebc5802/4-final-project-bite-buddy-digital-ocean/) will be automatically reflected in the deployed backend.
+
+# Getting Started with Express App (Running Locally)
 
 This project was bootstrapped with [Express](https://expressjs.com/).
 
