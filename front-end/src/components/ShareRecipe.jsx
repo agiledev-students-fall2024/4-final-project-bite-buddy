@@ -183,7 +183,7 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
                 value={step.duration !== null ? step.duration : ""}
                 onChange={(e) => handleArrayChange(e, index, "steps")}
                 min="0" // Enforce minimum value of 0
-                placeholder="Duration (minutes, optional)"
+                placeholder="Duration (seconds, optional)"
               />
             </div>
           ))}
@@ -197,7 +197,7 @@ function ShareRecipe({ closeShare, submitShareRecipe }) {
           </button>
         </div>
         <div>
-          <label>Total Time Approximation (minutes):</label>
+          <label>Total Time Approximation (seconds):</label>
           <input
             name="total_time"
             type="number"
