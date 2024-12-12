@@ -1,4 +1,4 @@
-# Bite Buddy
+# [Bite Buddy](https://4-final-project-bite-buddy-digital-ocean.vercel.app/)
 Bite Buddy is a cooking-focused app that allows users to track their culinary journeys, share their progress, and connect with a community of fellow food enthusiasts. Whether you're a beginner in the kitchen or a seasoned chef, Bite Buddy helps you create a visual and interactive timeline of your cooking journey.
 
 __Product Vision Statement__: To create a vibrant community where cooks of all levels can track their culinary progress, share their experiences, and grow their skills, turning cooking into an interactive, enjoyable, and social journey.
@@ -9,6 +9,11 @@ __Product Vision Statement__: To create a vibrant community where cooks of all l
 - Cooking Achievements: Unlock badges and milestones as you improve your skills and explore new cuisines.
 - Recipe Journal: Keep a personal collection of recipes you’ve tried and loved, with notes and modifications for future reference.
 - Challenges: Join cooking challenges to stay motivated and experiment with new dishes.
+
+## How to access and update Bite Buddy
+Bite Buddy is deployed using CI/CD, with its [frontend on Vercel](https://4-final-project-bite-buddy-digital-ocean.vercel.app/) and [backend on digital ocean](https://squid-app-t9mda.ondigitalocean.app/).
+
+Note: Bite Buddy uses CI/CD based on this [forked repository](https://github.com/ebc5802/4-final-project-bite-buddy-digital-ocean/tree/master), not this monorepo as it is created by Github Classroom. All contributions to Bite Buddy should follow the instructions contained in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Core Team Members
 * [Edison Chen](https://github.com/ebc5802)
