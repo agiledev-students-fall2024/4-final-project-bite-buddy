@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+## Frontend Deployment
+Bite Buddy is deployed using CI/CD. The frontend is [hosted on Vercel](https://4-final-project-bite-buddy-digital-ocean.vercel.app/). Any changes made to the [forked repository](https://github.com/ebc5802/4-final-project-bite-buddy-digital-ocean/) will be automatically reflected in the deployed backend.
+
+# Getting Started with Create React App (Running Locally)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

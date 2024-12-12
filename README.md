@@ -13,7 +13,7 @@ __Product Vision Statement__: To create a vibrant community where cooks of all l
 ## How to access and update Bite Buddy
 Bite Buddy is deployed using CI/CD, with its [frontend on Vercel](https://4-final-project-bite-buddy-digital-ocean.vercel.app/) and [backend on digital ocean](https://squid-app-t9mda.ondigitalocean.app/).
 
-Note: Bite Buddy uses CI/CD based on this [forked repository](https://github.com/ebc5802/4-final-project-bite-buddy-digital-ocean/tree/master), not this monorepo as it is created by Github Classroom. All contributions to Bite Buddy should follow the instructions contained in [CONTRIBUTING.md](./CONTRIBUTING.md).
+Note: Bite Buddy uses CI/CD based on this [forked repository](https://github.com/ebc5802/4-final-project-bite-buddy-digital-ocean/), not this monorepo as it is created by Github Classroom. All contributions to Bite Buddy should follow the instructions contained in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Core Team Members
 * [Edison Chen](https://github.com/ebc5802)
